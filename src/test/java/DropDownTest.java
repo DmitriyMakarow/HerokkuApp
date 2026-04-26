@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 import java.util.List;
@@ -24,6 +25,7 @@ public class DropDownTest {
         options.addArguments("--incognito");
         options.addArguments("--disable-notification");
         WebDriver driver = new ChromeDriver(options);
+        SoftAssert softAssert = new SoftAssert();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://the-internet.herokuapp.com/dropdown");
 
@@ -31,16 +33,16 @@ public class DropDownTest {
         Select dropdown = new Select(dropdownElement);
 
         List<WebElement> options1 = dropdown.getOptions();
-        Assert.assertEquals(options1.size(), 3);
-        Assert.assertEquals(options1.get(0).getText(), "Please select an option");
-        Assert.assertEquals(options1.get(1).getText(), "Option 1");
-        Assert.assertEquals(options1.get(2).getText(), "Option 2");
+        softAssert.assertEquals(options1.size(), 3);
+        softAssert.assertEquals(options1.get(0).getText(), "Please select an option");
+        softAssert.assertEquals(options1.get(1).getText(), "Option 1");
+        softAssert.assertEquals(options1.get(2).getText(), "Option 2");
 
         dropdown.selectByVisibleText("Option 1");
-        Assert.assertEquals(dropdown.getFirstSelectedOption().getText(), "Option 1");
+        softAssert.assertEquals(dropdown.getFirstSelectedOption().getText(), "Option 1");
 
         dropdown.selectByVisibleText("Option 2");
-        Assert.assertEquals(dropdown.getFirstSelectedOption().getText(), "Option 2");
+        softAssert.assertEquals(dropdown.getFirstSelectedOption().getText(), "Option 2");
 
         driver.quit();
     }

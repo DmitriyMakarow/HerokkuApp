@@ -4,6 +4,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 
@@ -21,21 +22,21 @@ public class CheckBoxTest {
         options.addArguments("--incognito");
         options.addArguments("--disable-notification");
         WebDriver driver = new ChromeDriver(options);
+        SoftAssert softAssert = new SoftAssert();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://the-internet.herokuapp.com/checkboxes");
 
         boolean isCheck = driver.findElements(By.cssSelector("[type=checkbox]")).get(0).isSelected();
-        Assert.assertFalse(isCheck);
+        softAssert.assertFalse(isCheck);
         driver.findElements(By.cssSelector("[type=checkbox]")).get(0).click();
         boolean isCheck2 = driver.findElements(By.cssSelector("[type=checkbox]")).get(0).isSelected();
-        Assert.assertTrue(isCheck2);
+        softAssert.assertTrue(isCheck2);
 
         boolean isCheck3 = driver.findElements(By.cssSelector("[type=checkbox]")).get(1).isSelected();
-        Assert.assertTrue(isCheck3);
+        softAssert.assertTrue(isCheck3);
         driver.findElements(By.cssSelector("[type=checkbox]")).get(1).click();
         boolean isCheck4 = driver.findElements(By.cssSelector("[type=checkbox]")).get(1).isSelected();
-        Assert.assertFalse(isCheck4);
-
+        softAssert.assertFalse(isCheck4);
         driver.quit();
     }
 }

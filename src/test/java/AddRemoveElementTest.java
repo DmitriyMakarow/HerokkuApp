@@ -4,6 +4,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 
@@ -24,13 +25,12 @@ public class AddRemoveElementTest {
         options.addArguments("--incognito");
         // отключает нотификации на сайте
         options.addArguments("--disable-notification");
-
         // определяем браузер, с которым хотим работать
         WebDriver driver = new ChromeDriver(options);
-
         // неявное ожидание, в течении 10 секунд ожидаем, что при открытии страницы, появится кнопка "Add Element"
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
+        // создание объекта класса SoftAssert
+        SoftAssert softAssert = new SoftAssert();
         //открывает страницу по указанному url
         driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
 
@@ -40,14 +40,14 @@ public class AddRemoveElementTest {
 
         // проверка, что на странице отображается 2 элемента с текстом "Delete"
         int size = driver.findElements(By.xpath("//button[text()='Delete']")).size();
-        Assert.assertEquals(size, 2);
+        softAssert.assertEquals(size, 2);
 
         // один раз нажимает на кнопку "Delete"
         driver.findElement(By.xpath("//button[text()='Delete']")).click();
 
         // проверка, что на странице отображается 1 элемент с текстом "Delete"
         int size1 = driver.findElements(By.xpath("//button[text()='Delete']")).size();
-        Assert.assertEquals(size1, 1);
+        softAssert.assertEquals(size1, 1);
 
         // закрывает браузер
         driver.quit();

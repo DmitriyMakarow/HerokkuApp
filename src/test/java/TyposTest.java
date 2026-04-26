@@ -23,15 +23,12 @@ public class TyposTest {
         WebDriver driver = new ChromeDriver(options);
         SoftAssert softAssert = new SoftAssert();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        //открывает страницу по указанному url
         driver.get("https://the-internet.herokuapp.com/typos");
 
         for (int i = 0; i < 10; i++) {
             driver.navigate().refresh();
             String text = driver.findElement(By.xpath("(//p[2])")).getText();
             softAssert.assertEquals(text, "Sometimes you'll see a typo, other times you won't.");
-            System.out.println(text);
         }
         driver.quit();
         softAssert.assertAll();

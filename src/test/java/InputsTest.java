@@ -34,23 +34,19 @@ public class InputsTest {
         String text = driver.findElement(By.tagName("input")).getAttribute("Value");
         // проверка, что в поле отсутствует введенный текст
         softAssert.assertEquals(text, "test");
-
         // очистка инпута, т.к. возможно ввести букву "e"
         WebElement element = driver.findElement(By.tagName("input"));
         element.clear();
-
         //ввод валидного значения
         driver.findElement(By.tagName("input")).sendKeys("10");
         String value1 = driver.findElement(By.tagName("input")).getAttribute("value");
         // проверка, что в поле есть введенное значение
         softAssert.assertEquals(value1, "10");
-
         // увеличение значения с помощью степпера
         driver.findElement(By.tagName("input")).sendKeys(Keys.ARROW_UP);
         String value2 = driver.findElement(By.tagName("input")).getAttribute("value");
         // проверка, что значение увеличилось
         softAssert.assertEquals(value2, "11");
-
         // уменьшение значения с помощью степпера
         driver.findElement(By.tagName("input")).sendKeys(Keys.ARROW_DOWN);
         String value3 = driver.findElement(By.tagName("input")).getAttribute("value");
